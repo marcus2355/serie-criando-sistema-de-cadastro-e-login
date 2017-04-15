@@ -9,7 +9,7 @@ class Auth
 
 	public function setURLs(
 		$after_login,
-		$after_logout//,
+		$after_logout //,
 		//$subfolder = 'default'
 	)
 	{

@@ -11,7 +11,7 @@ class CadastroController extends \HXPHP\System\Controller
 		true
 		);
 
-		$this->auth->redirectCheck(false);
+		$this->auth->redirectCheck(true);
 	}
 
 
@@ -21,7 +21,7 @@ class CadastroController extends \HXPHP\System\Controller
 		$this->view->setFile('index');
 
 		$this->request->setCustomFilters(array(
-			'email' => FILTER_VALIDATE_EMAIL
+			'email' => FILTER_VALIDATE_EMAIL //filtro de validação de email
 		));
 
 		$post = $this->request->post();
@@ -35,6 +35,9 @@ class CadastroController extends \HXPHP\System\Controller
 					'Ops! Não foi possível efetuar seu cadastro. <br> Verifique os erros abaixo:',
 					$cadastrarUsuario->errors
 				));
+			}
+			else{
+				$this->auth->login($cadastrarUsuario->user->id, $cadastrarUsuario->user->username);
 			}
 		}
 	}

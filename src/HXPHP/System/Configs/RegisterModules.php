@@ -10,7 +10,7 @@ class RegisterModules
 	{
 		$this->modules = array(
 			'database',
-			'mail'
+			'mail',
 			'auth'
 		);
 		

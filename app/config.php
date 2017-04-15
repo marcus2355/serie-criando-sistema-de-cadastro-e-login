@@ -8,8 +8,8 @@
 
 	$configs->env->development->database->setConnectionData(array(
 		'host' => 'localhost',
-		'user' => 'root',
-		'password' => '',
+		'user' => 'Marcus_Vinicius',
+		'password' => 'p5000702mv',
 		'dbname' => 'sistemahx'
 	));
 

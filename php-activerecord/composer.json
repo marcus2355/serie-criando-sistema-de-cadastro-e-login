@@ -1,0 +1,6 @@
+{
+    "require": {
+        "pfbc/pfbc": "dev-master",
+        "php-activerecord/php-activerecord": "dev-master"
+    }
+}

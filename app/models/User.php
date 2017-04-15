@@ -52,7 +52,7 @@ class User extends \HXPHP\System\Model
 			'status' => 1
 		);
 
-		$password = \HXPHP\System\Tools::hashHX($post['password']);
+		$password = \HXPHP\System\Tools::hashHX($post['password']);// cria uma senha criptografada
 
 		$post = array_merge($post,$user_data,$password);
 
@@ -71,5 +71,19 @@ class User extends \HXPHP\System\Model
 		}
 
 		return $callbackObj;
-	}
+	
+		public static function login (array $post)
+		$user = self::find_by_username($post['username']);
+
+		if(!is_null($user)){
+			$password= \HXPHP\System\Tools::hashHX($post['password']$user->salt );// compara a senha criptografada
+
+			if(LoginAttempt::Existemtentativas($user_id)){
+			if($password['password']===$user->password){
+				LoginAttempt::Limpartentativas($user_id));
+			}
+			else{
+				LoginAttempt::Registrartentativas($user_id));
+			}
+	}	}
 }

@@ -71,19 +71,35 @@ class User extends \HXPHP\System\Model
 		}
 
 		return $callbackObj;
-	
-		public static function login (array $post)
+	}
+	public static function login(array $post)
+	{
 		$user = self::find_by_username($post['username']);
 
 		if(!is_null($user)){
-			$password= \HXPHP\System\Tools::hashHX($post['password']$user->salt );// compara a senha criptografada
+			$password= \HXPHP\System\Tools::hashHX($post['password'], $user->salt );// compara a senha criptografada
 
-			if(LoginAttempt::Existemtentativas($user_id)){
-			if($password['password']===$user->password){
-				LoginAttempt::Limpartentativas($user_id));
-			}
-			else{
-				LoginAttempt::Registrartentativas($user_id));
-			}
-	}	}
+			if($user->status===1){
+				if(LoginAttempt::Existemtentativas($user->id)){
+
+			 		if($password['password'] === $user->password){
+						var_dump('logado');
+						LoginAttempt::Limpartentativas($user->id);
+						}
+
+						else{
+						LoginAttempt::Registrartentativas($user->id);
+							}
+					}
+				
+				else{
+
+					$user->status=0;
+					$user->save(false);
+
+					}
+				
+			}	
+		}			
+	}	
 }

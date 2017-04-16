@@ -11,16 +11,16 @@ class LoginController extends \HXPHP\System\Controller
 		true
 		);
 
-		$this->auth->redirectCheck(true);
+		$this->auth->redirectCheck();
 	}
 
-	public function logarAction()
+	public function LogarAction()
 	{
 
 		$this->view->setFile('index');
 		$post= $this->request->post();
 		if (!empty($post)){
-
+			User::login($post);
 		}
 
 	}

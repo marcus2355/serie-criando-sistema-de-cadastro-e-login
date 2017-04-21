@@ -10,13 +10,16 @@ class LoginController extends \HXPHP\System\Controller
 		$configs->auth->after_logout ,
 		true
 		);
+	}
 
+	public function indexAction()
+	{
 		$this->auth->redirectCheck(true);//true
 	}
 
 	public function LogarAction()
 	{
-
+		$this->auth->redirectCheck(true);//true
 		$this->view->setFile('index');
 		$post= $this->request->post();
 		if (!empty($post)){
@@ -36,5 +39,10 @@ class LoginController extends \HXPHP\System\Controller
 				$this->load('Helpers\Alert' , $error);
 			}
 		}
+	}
+
+	public function sairAction()
+	{
+		return $this->auth->logout();
 	}
 }

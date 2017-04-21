@@ -15,4 +15,21 @@
 
 	$configs->env->development->auth->setURLs('/sistema/home/','/sistema/login/');
 
+
+
+
+$configs->env->add('production');
+
+	$configs->env->production->baseURI = '/';
+
+	$configs->env->production->database->setConnectionData(array(
+		'host' => 'localhost',
+		'user' => 'id1409722_marcusvinicius',
+		'password' => 'mvmh190215',
+		'dbname' => 'id1409722_sistema'
+	));
+
+	$configs->env->production->auth->setURLs('/home/','/login/');
+
+
 	return $configs;

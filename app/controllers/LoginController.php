@@ -11,7 +11,7 @@ class LoginController extends \HXPHP\System\Controller
 		true
 		);
 
-		$this->auth->redirectCheck();//true
+		$this->auth->redirectCheck(true);//true
 	}
 
 	public function LogarAction()
@@ -29,7 +29,9 @@ class LoginController extends \HXPHP\System\Controller
 			else{
 				$this->load('Modules\Messages','auth');
 				$this->messages->setBlock('alerts');
-				$error= $this->messages->getByCode($login->code);
+				$error= $this->messages->getByCode($login->code, array(
+					'message'=>$login->Tentativasrestantes
+				));
 
 				$this->load('Helpers\Alert' , $error);
 			}

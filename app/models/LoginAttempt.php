@@ -8,7 +8,7 @@ class LoginAttempt extends \HXPHP\System\Model
 	}
 	public static function Tentativasrestantes($user_id)
 	{
-		return intval(5-self::Totaldetentativas());
+		return intval(5-self::Totaldetentativas($user_id));
 	}
 
 	public static function Registrartentativas($user_id)

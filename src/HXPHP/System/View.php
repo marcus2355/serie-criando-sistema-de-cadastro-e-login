@@ -15,7 +15,7 @@ class View
 	 * @var object
 	 */
 	private $configs;
-	
+
 	/**
 	 * Injeção do Http Request
 	 * @var object
@@ -31,13 +31,13 @@ class View
 	protected $header = null;
 	protected $file = null;
 	protected $footer = null;
-	protected $vars = array();
-	protected $assets = array(
-		'css' => array(),
-		'js' => array()
-	);
+	protected $vars = [];
+	protected $assets = [
+		'css' => [],
+		'js' => []
+	];
 
-	public function setConfigs(Configs\Config $configs, $controller, $action)
+	public function setConfigs(Configs\Config $configs, $subfolder, $controller, $action)
 	{
 		/**
 		 * Injeção das Configurações
@@ -45,7 +45,7 @@ class View
 		 */
 		$this->configs = $configs;
 		$this->request  = new Http\Request($configs->baseURI);
-		
+
 		/**
 		 * Tratamento das variáveis
 		 */
@@ -59,17 +59,17 @@ class View
 		 */
 		$view_settings = new \stdClass;
 
-		$default_values = array(
-			'path' => $controller,
+		$default_values = [
+			'path' => $subfolder . $controller,
 			'template' => true,
-			'header' => 'header',
+			'header' => $subfolder . 'header',
 			'file' => $action,
-			'footer' => 'footer',
+			'footer' => $subfolder . 'footer',
 			'title' => $this->configs->title
-		);
+		];
 
 		foreach ($default_values as $setting => $value) {
-			if(is_null($this->$setting)) {
+			if(!$this->$setting) {
 				$view_settings->$setting = $value;
 				continue;
 			}
@@ -82,7 +82,7 @@ class View
 				->setHeader($view_settings->header)
 				->setFile($view_settings->file)
 				->setFooter($view_settings->footer)
-				->setTitle($view_settings->title);	
+				->setTitle($view_settings->title);
 	}
 
 	/**
@@ -174,13 +174,10 @@ class View
 	 */
 	public function setAssets($type, $assets)
 	{
-		if (is_array($assets)) {
-			$this->assets[$type] = array_merge($this->assets[$type], $assets);
-		} 
-		else {
-			array_push($this->assets[$type], $assets);
-		}
-		 
+		(is_array($assets)) ?
+                    $this->assets[$type] = array_merge($this->assets[$type], $assets) :
+                    array_push($this->assets[$type], $assets);
+
 		return $this;
 	}
 
@@ -191,7 +188,7 @@ class View
 	 * @return string                HTML formatado de acordo com o tipo de arquivo
 	 */
 
-	private function assets($type, array $custom_assets = array())
+	private function assets($type, array $custom_assets = [])
 	{
 		$add_assets = '';
 
@@ -204,8 +201,8 @@ class View
 				$tag = '<script type="text/javascript" src="%s"></script>'."\n\r";
 				break;
 		}
-		
-		if (count($custom_assets) > 0)
+
+		if (count($custom_assets))
 			foreach ($custom_assets as $file)
 				$add_assets .= sprintf($tag,$file);
 
@@ -219,12 +216,12 @@ class View
 	public function flush()
 	{
 
-		$default_data = array(
+		$default_data = [
 			'title' => $this->title
-		);
+		];
 
 		$data = array_merge($default_data, $this->vars);
-		
+
 		//Extract que transforma os parâmetros em variáveis disponíveis para a VIEW
 		extract($data, EXTR_PREFIX_ALL, 'view');
 
@@ -241,6 +238,7 @@ class View
 		//Atribuição das constantes
 		define('BASE',   $baseURI);
 		define('ASSETS', $baseURI . 'public/assets/');
+		define('BOWER', $baseURI . 'public/bower_components/');
 		define('IMG',    $baseURI . 'public/img/');
 		define('CSS',    $baseURI . 'public/css/');
 		define('JS',     $baseURI . 'public/js/');
@@ -248,11 +246,11 @@ class View
 		//Verifica a existência da VIEW
 		$view = $viewsDir . $this->path . DS . $this->file . $viewsExt;
 
-		if ( ! file_exists($view))
+		if (!file_exists($view))
 			throw new \Exception("Erro fatal: A view <'$view'> não foi encontrada. Por favor, crie a view e tente novamente.", 1);
 
 		//Mecanismo de template
-		if ($this->template === false) {
+		if (!$this->template) {
 			//Inclusão da view
 			require_once($view);
 			exit();
@@ -262,7 +260,7 @@ class View
 		$header = $viewsDir . $this->header . $viewsExt;
 		$footer = $viewsDir . $this->footer . $viewsExt;
 
-		if ( ! file_exists($header) || ! file_exists($footer))
+		if (!file_exists($header) || !file_exists($footer))
 			throw new \Exception("Erro fatal: O header <$header> ou o footer <$footer> não existe. Por favor, verifique e tente novamente.");
 
 		//Inclusão dos arquivos

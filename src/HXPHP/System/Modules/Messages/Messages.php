@@ -21,7 +21,7 @@ class Messages
 	 * @var string
 	 */
 	private $block = null;
-	
+
 	/**
 	 * Método construtor
 	 * @param string $template Nome do arquivo que encontra-se na sub-pasta 'templates'
@@ -39,7 +39,7 @@ class Messages
 		 * JSON => ARRAY
 		 * @var array
 		 */
-		if($template->getJson() !== false)
+		if($template->getJson())
 			$this->content = json_decode($template->getJson(), true);
 
 		return $this;
@@ -47,7 +47,7 @@ class Messages
 
 	/**
 	 * Altera o bloco padrão
-	 * @param string $block 
+	 * @param string $block
 	 */
 	public function setBlock($block)
 	{
@@ -65,8 +65,8 @@ class Messages
 	{
 		$block = $this->block;
 
-		if ( ! is_null($block))
-			return call_user_func_array(array(&$this->$block, $method), $args);
+		if ($block)
+			return call_user_func_array([&$this->$block, $method], $args);
 
 		throw new \Exception("O metodo <$method> nao existe.", 1);
 	}
@@ -78,7 +78,7 @@ class Messages
 	 */
 	public function __get($block)
 	{
-		if(isset($this->content[$block])) {
+		if($this->content[$block]) {
 			$this->$block = new Template($this->content[$block]);
 
 			return $this->$block;

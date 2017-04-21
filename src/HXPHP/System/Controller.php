@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace HXPHP\System;
 use HXPHP\System\Http as Http;
@@ -34,8 +34,8 @@ class Controller
 		//Injeção da VIEW
 		$this->view = new View;
 		$this->response = new Http\Response;
-		
-		if (!is_null($configs) && $configs instanceof Configs\Config)
+
+		if ($configs && $configs instanceof Configs\Config)
 			$this->setConfigs($configs);
 	}
 
@@ -48,7 +48,7 @@ class Controller
 	{
 		//Injeção das dependências
 		$this->configs  = $configs;
-		$this->request  = new Http\Request($configs->baseURI);
+		$this->request  = new Http\Request($configs->baseURI, $configs->controllers->directory);
 
 		return $this;
 	}
@@ -58,7 +58,7 @@ class Controller
 	 */
 	public function indexAction()
     {
-    	
+
     }
 
 	/**
@@ -71,9 +71,9 @@ class Controller
 	{
 		$total_args = func_num_args();
 
-		if ($total_args == 0)
+		if (!$total_args)
 			throw new \Exception("Nenhum objeto foi definido para ser carregado.", 1);
-			
+
 
 		/**
 		 * Retorna todos os argumentos e define o primeiro como
@@ -88,26 +88,26 @@ class Controller
 		 * parâmetros para o construtor do objeto injetado
 		 */
 		unset($args[0]);
-		$params = empty($args) ? array() : array_values($args);
+		$params = !($args) ? [] : array_values($args);
 
 		/**
 		 * Tratamento que adiciona a pasta do módulo
 		 */
 		$explode = explode('\\', $object);
-		$object = ($explode[0] === 'Modules' ? $object . '\\' . end($explode) : $object);
+		$object = $object . '\\' . end($explode);
 		$object = 'HXPHP\System\\' . $object;
 
 		if (class_exists($object)) {
 			$name = end($explode);
 			$name = strtolower(Tools::filteredName($name));
 
-			if ( ! empty($params)) {
+			if ($params) {
 				$ref = new \ReflectionClass($object);
   				$this->view->$name = $ref->newInstanceArgs($params);
 			}
-			else{
+			else
 				$this->view->$name = new $object();
-			}
+
 
 			return $this->view->$name;
 		}
@@ -120,18 +120,16 @@ class Controller
 	 */
 	public function __get($param)
 	{
-		if (isset($this->view->$param)) {
+		if (isset($this->view->$param))
 			return $this->view->$param;
-		}
-		elseif (isset($this->$param)) {
-			return $this->$param;
-		}
-		else {
-			throw new \Exception("Parametro <$param> nao encontrado.", 1);
-		}
 
+		elseif (isset($this->$param))
+			return $this->$param;
+
+		else
+			throw new \Exception("Parametro <$param> nao encontrado.", 1);
 	}
-	
+
 	/**
 	 * Redirecionamento
 	 * @param  string $url Link de redirecionamento

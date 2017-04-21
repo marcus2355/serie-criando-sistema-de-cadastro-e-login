@@ -78,6 +78,7 @@ class User extends \HXPHP\System\Model
 		$callbackObj->user = null;
 		$callbackObj->status = false;
 		$callbackObj->code = null;
+		$callbackObj->Tentativasrestantes = null;
 
 
 
@@ -98,9 +99,17 @@ class User extends \HXPHP\System\Model
 						}
 
 						else{
-							$callbackObj->code = 'dados-incorretos';
-						LoginAttempt::Registrartentativas($user->id);
+
+							if (LoginAttempt::Tentativasrestantes($user->id)<= 3) {
+								$callbackObj->code = 'tentativas-esgotando';
+								$callbackObj->Tentativasrestantes = LoginAttempt::Tentativasrestantes($user->id);
 							}
+							else{
+								$callbackObj->code = 'dados-incorretos';
+							}
+						
+						LoginAttempt::Registrartentativas($user->id);
+						}
 					}
 				
 				else{
@@ -108,7 +117,7 @@ class User extends \HXPHP\System\Model
 					$callbackObj->code = 'usuario-bloqueado';
 					$user->status=0;
 					$user->save(false);
-					echo 'usuario-bloqueado';
+
 				}
 				
 			}

@@ -33,7 +33,7 @@ class LoginController extends \HXPHP\System\Controller
 				$this->load('Modules\Messages','auth');
 				$this->messages->setBlock('alerts');
 				$error= $this->messages->getByCode($login->code, array(
-					'message'=>$login->Tentativasrestantes
+					'messages'=>$login->Tentativasrestantes
 				));
 
 				$this->load('Helpers\Alert' , $error);

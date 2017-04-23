@@ -52,6 +52,7 @@ class RecuperarController extends \HXPHP\System\Controller
 							$this->passwordrecovery->link
 						)
 					));
+									
 					$this->load('Services\Email');
 
 					$envioDoEmail=$this->email->send(
@@ -85,10 +86,12 @@ class RecuperarController extends \HXPHP\System\Controller
 
 	public function redefinirAction($token)
 	{
+		$validartoken= Recovery::validartoken($token);
+		
 
 	}
 
-	public function alterarsenhaAction($token)
+	public function alterarSenhaAction($token)
 	{
 		
 	}

@@ -11,7 +11,7 @@ class Recovery extends \HXPHP\System\Model
 
 		$callback_obj = new \stdClass;
 		$callback_obj->user = null;
-		$callback_obj->code = false;
+		$callback_obj->code = null;
 		$callback_obj->status = false;
 
 		$user_exists = user::find_by_email($user_email);
@@ -47,5 +47,15 @@ class Recovery extends \HXPHP\System\Model
 			$callback_obj->code = 'token-invalido';
 		}
 		return $callback_obj;
+	}
+	public static function limpar($user_id)
+	{
+		return self::delete_all(array(
+			'conditions'=>array(
+				'user_id = ?',
+				$user_id
+
+			)
+		));
 	}
 }

@@ -2,6 +2,10 @@
 
 class User extends \HXPHP\System\Model
 {
+	static $belongs_to = array(
+		array('role')
+	);
+
 	static $validates_presence_of = array(
 		array(
 			'name',
@@ -26,12 +30,11 @@ class User extends \HXPHP\System\Model
 			'username',
 			'message' => 'Já existe um usuário com este nome de usuário cadastrado.'
 		),
-		array('email',
+		array(
+			'email',
 			'message' => 'Já existe um usuário com este e-mail cadastrado.'
 		)
 	);
-
-
 
 	public static function cadastrar(array $post)
 	{
@@ -52,9 +55,9 @@ class User extends \HXPHP\System\Model
 			'status' => 1
 		);
 
-		$password = \HXPHP\System\Tools::hashHX($post['password']);// cria uma senha criptografada
+		$password = \HXPHP\System\Tools::hashHX($post['password']);
 
-		$post = array_merge($post,$user_data,$password);
+		$post = array_merge($post, $user_data, $password);
 
 		$cadastrar = self::create($post);
 
@@ -72,71 +75,69 @@ class User extends \HXPHP\System\Model
 
 		return $callbackObj;
 	}
+
 	public static function login(array $post)
 	{
 		$callbackObj = new \stdClass;
 		$callbackObj->user = null;
 		$callbackObj->status = false;
 		$callbackObj->code = null;
-		$callbackObj->Tentativasrestantes = null;
-
-
+		$callbackObj->tentativas_restantes = null;
 
 
 		$user = self::find_by_username($post['username']);
 
-		if(!is_null($user)){
-			$password= \HXPHP\System\Tools::hashHX($post['password'], $user->salt );// compara a senha criptografada
+		if (!is_null($user)) {
+			$password = \HXPHP\System\Tools::hashHX($post['password'], $user->salt);
 
-			if($user->status===1){
-				if(LoginAttempt::Existemtentativas($user->id)){
-
-			 		if($password['password'] === $user->password){
+			if ($user->status === 1) {
+				if (LoginAttempt::ExistemTentativas($user->id)) {
+					if ($password['password'] === $user->password) {
 						$callbackObj->user = $user;
 						$callbackObj->status = true;
 
-						LoginAttempt::Limpartentativas($user->id);
-						}
-
-						else{
-
-							if (LoginAttempt::Tentativasrestantes($user->id)<= 3) {
-								$callbackObj->code = 'tentativas-esgotando';
-								$callbackObj->Tentativasrestantes = LoginAttempt::Tentativasrestantes($user->id);
-							}
-							else{
-								$callbackObj->code = 'dados-incorretos';
-							}
-						
-						LoginAttempt::Registrartentativas($user->id);
-						}
+						LoginAttempt::LimparTentativas($user->id);
 					}
-				
-				else{
+					else {
+						if (LoginAttempt::TentativasRestantes($user->id) <= 3) {
+							$callbackObj->code = 'tentativas-esgotando';
+							$callbackObj->tentativas_restantes = LoginAttempt::TentativasRestantes($user->id);
+						}
+						else {
+							$callbackObj->code = 'dados-incorretos';
+						}
+						
 
-					$callbackObj->code = 'usuario-bloqueado';
-					$user->status=0;
-					$user->save(false);
-
+						LoginAttempt::RegistrarTentativa($user->id);
+					}
 				}
-				
+				else {
+					$callbackObj->code = 'usuario-bloqueado';
+
+					$user->status = 0;
+					$user->save(false);
+				}
 			}
 			else {
-			$callbackObj->code = 'usuario-bloqueado';
-			}		
+				$callbackObj->code = 'usuario-bloqueado';
+			}
 		}
 		else {
 			$callbackObj->code = 'usuario-inexistente';
 		}
-		return $callbackObj;			
-	}
-	public static function atualizarSenha($user,$newPassword)	
-	{
-		$user= self::find_by_id($user->id);
-		$password = \HXPHP\System\Tools::hashHX($newPassword);
-		$user->password = $password['password'];
-		$user->salt= $password['salt'];
 
-		return $user=save(false);
+		return $callbackObj;
+	}
+
+	public static function atualizarSenha($user, $newPassword)
+	{
+		$user = self::find_by_id($user->id);
+
+		$password = \HXPHP\System\Tools::hashHX($newPassword);
+
+		$user->password = $password['password'];
+		$user->salt = $password['salt'];
+
+		return $user->save(false);
 	}
 }

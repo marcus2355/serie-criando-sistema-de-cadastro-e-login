@@ -1,8 +1,0 @@
-Esses arquivos são referentes ao mini curso de banco de dados e login do grupo HXtutors
-os arquivos do estudo estao no diretorio:
-
-E:\wamp64\www\sistema
-
-e o link do mini curso é:
-
-https://www.youtube.com/watch?v=a6CtcOylJWs&index=1&list=PL2NLqGvZxQu2xMnvPKqLz4f9Pljsj-K4B

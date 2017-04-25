@@ -25,7 +25,7 @@ $configs->env->add('production');
 	$configs->env->production->database->setConnectionData(array(
 		'host' => 'localhost',
 		'user' => 'id1409722_marcusvinicius',
-		'password' => 'mvmh190215',
+		'password' => 'mvmh150219',
 		'dbname' => 'id1409722_sistema'
 	));
 

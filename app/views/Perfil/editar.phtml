@@ -1,0 +1,33 @@
+<div class="panel-body">
+ 	<?php 
+ 		echo (isset($this->alert) ? $this->alert : ''); 
+ 		$values=[];
+
+ 		form::open('editarusuario',$values,[
+
+ 		'action'=> BASE. 'perfil/atualizar',
+ 		'prevent'=>[
+ 			'focus'
+ 			]
+ 		]);
+
+ 		form::Textbox(
+ 			'Nome:','name',[ 'required'=>1]
+ 			);
+ 		form::Textbox(
+ 			'Login:','username',[ 'required'=>1]
+ 			);
+ 		form::Email(
+ 			'E-mail:','email',[ 'required'=>1]
+ 			);
+ 		form::Password(
+ 			'Senha:<br>Preencha apenas se desejar alterar.','password'
+ 			);
+ 		form::Button('Atualizar Perfil','submit',[
+ 		'class'=>'btn-success HXPHP-submit-button'
+ 		]
+ 		);
+ 		form:: close(false)
+
+ 	?>
+</div>

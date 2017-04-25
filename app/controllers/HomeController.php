@@ -14,6 +14,13 @@ class HomeController extends \HXPHP\System\Controller
 		);
 
 		$this->auth->redirectCheck();
+		$this->load(
+			'Helpers/Menus',
+			$this->request,
+			$this->configs,
+			$this->auth->getUserRole()
+
+			);
 
 		$user_id = $this->auth->getUserId();
 

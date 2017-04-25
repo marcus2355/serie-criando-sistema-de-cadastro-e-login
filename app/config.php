@@ -25,6 +25,14 @@
 			)
 		), 'user');
 
+	$configs->env->development->menu->setConfigs(array(
+		'conteiner'=> 'nav',
+		'conteiner_class'=> 'nav navbar-default',
+		'menu_class'=> 	'nav navbar-nav'
+
+		));
+
+
 	$configs->env->development->menu->setMenus(array(
 		'Home/dashboard'=>'%daseURI%/home'
 		));

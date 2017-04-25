@@ -16,9 +16,23 @@
 	$configs->env->development->auth->setURLs('/sistema/home/','/sistema/login/');
 
 
+	$configs->env->development->menu->setMenus(array(
+		'Home/dashboard'=>'%daseURI%/home',
+		'Link/user'=>'http://www.google.com',
+		'Submenus/cog'=> array(
+			'Paneil/dashboard'=>'%daseURI%/home',
+			'Atualizações/hand-o-up'=>'%daseURI%/atualizacoes'
+			)
+		), 'user');
+
+	$configs->env->development->menu->setMenus(array(
+		'Home/dashboard'=>'%daseURI%/home'
+		));
 
 
-$configs->env->add('production');
+
+
+	$configs->env->add('production');
 
 	$configs->env->production->baseURI = '/';
 

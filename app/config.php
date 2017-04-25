@@ -17,26 +17,22 @@
 
 
 	$configs->env->development->menu->setMenus(array(
-		'Home/dashboard'=>'%daseURI%/home',
-		'Link/user'=>'http://www.google.com',
-		'Submenus/cog'=> array(
-			'Paneil/dashboard'=>'%daseURI%/home',
-			'Atualizações/hand-o-up'=>'%daseURI%/atualizacoes'
-			)
-		), 'user');
-
-	$configs->env->development->menu->setConfigs(array(
-		'conteiner'=> 'nav',
-		'conteiner_class'=> 'nav navbar-default',
-		'menu_class'=> 	'nav navbar-nav'
-
-		));
-
-
+		'Home/dashboard' => '%baseURI%/home',
+		'Projetos/briefcase' => '%baseURI%/projetos',
+		'Editar perfil/cog' => '%baseURI%/perfil/editar',
+	), 'user');
 	$configs->env->development->menu->setMenus(array(
-		'Home/dashboard'=>'%daseURI%/home'
-		));
+		'Home/dashboard' => '%baseURI%/home'
+	));
+	$configs->env->development->menu->setConfigs(array(
+		'container' => 'nav',
+		'container_class' => 'navbar navbar-default',
+		'menu_class' => 'nav navbar-nav'
+	));
 
+
+
+	
 
 
 

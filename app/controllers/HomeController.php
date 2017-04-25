@@ -15,7 +15,7 @@ class HomeController extends \HXPHP\System\Controller
 
 		$this->auth->redirectCheck();
 		$this->load(
-			'Helpers/Menus',
+			'Helpers/Menu',
 			$this->request,
 			$this->configs,
 			$this->auth->getUserRole()

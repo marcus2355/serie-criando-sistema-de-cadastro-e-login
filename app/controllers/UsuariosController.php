@@ -34,11 +34,46 @@ class UsuariosController extends \HXPHP\System\Controller
 		
 
 		$this->view->setTitle('HXPHP - Administrativo')
+					->setFile('index')
 					->setVars([
 						'user'=>$user,
 						'users'=> User::all()
 						]);
 	}
+	public function bloquearAction($user_id= null)
+	{
+		if (is_numeric($user_id)) {
+			$user=User::find_by_id($user_id);
 
-	
+			if (!is_null($user)) {
+			$user ->status= 0;
+			$user ->save(false);
+			$this->view->setVar('user',User::all());
+			}
+		}
+	}
+	public function desbloquearAction($user_id= null)
+	{
+		if (is_numeric($user_id)) {
+			$user=User::find_by_id($user_id);
+
+			if (!is_null($user)) {
+			$user ->status= 1;
+			$user ->save(false);
+			$this->view->setVar('user',User::all());
+			}
+		}
+	}
+	public function excluirAction($user_id= null)
+	{
+		if (is_numeric($user_id)) {
+			$user=User::find_by_id($user_id);
+
+			if (!is_null($user)) {
+			$user ->delete();
+			$this->view->setVar('user',User::all());
+			}
+		}
+	}
+
 }

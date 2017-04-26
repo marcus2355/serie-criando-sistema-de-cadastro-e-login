@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ad1fbdd5f0ade54e203348677f611e1",
+    "content-hash": "2f543fcc17a8d4b6f117421a011ae13e",
     "packages": [
         {
             "name": "avbdr/php-bootstrap-form",
@@ -89,6 +89,47 @@
                 "orm"
             ],
             "time": "2016-11-29 11:06:47"
+        },
+        {
+            "name": "verot/class.upload.php",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/verot/class.upload.php.git",
+                "reference": "f266dc964f417f2d24a33a7c9efee1d05f6bfc6e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/verot/class.upload.php/zipball/f266dc964f417f2d24a33a7c9efee1d05f6bfc6e",
+                "reference": "f266dc964f417f2d24a33a7c9efee1d05f6bfc6e",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=4"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/class.upload.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPLv2"
+            ],
+            "authors": [
+                {
+                    "name": "Colin Verot",
+                    "email": "colin@verot.net"
+                }
+            ],
+            "description": "This PHP class uploads files and manipulates images very easily.",
+            "homepage": "http://www.verot.net/php_class_upload.htm",
+            "keywords": [
+                "gd",
+                "upload"
+            ],
+            "time": "2017-03-18 00:16:06"
         }
     ],
     "packages-dev": [],
@@ -96,7 +137,8 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "php-activerecord/php-activerecord": 20,
-        "avbdr/php-bootstrap-form": 20
+        "avbdr/php-bootstrap-form": 20,
+        "verot/class.upload.php": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

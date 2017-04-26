@@ -30,11 +30,6 @@ class PerfilController extends \HXPHP\System\Controller
 
 	public function editarAction()
 	{
-		
-	}
-
-	public function atualizarAction()
-	{
 		$this->view->setFile('editar');
 
 		$user_id = $this->auth->getUserId();

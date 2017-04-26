@@ -1,5 +1,6 @@
 <div class="panel-body">
  	<?php 
+ 	    echo isset($this->menu) ? $this->menu->getMenu() : '' ;
  		echo (isset($this->alert) ? $this->alert : ''); 
  		$values=[
  		'name'=>$view_user->name,
@@ -9,7 +10,7 @@
 
  		form::open('editarusuario',$values,[
 
- 		'action'=> BASE. 'perfil/atualizar',
+ 		'action'=> BASE. 'perfil/editar',
  		'prevent'=>[
  			'focus'
  			]

@@ -182,3 +182,4 @@ class User extends \HXPHP\System\Model
 		return $user->save(false);
 	}
 }
+

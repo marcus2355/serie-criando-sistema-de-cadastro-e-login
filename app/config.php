@@ -33,9 +33,6 @@
 
 
 	
-
-
-
 	$configs->env->add('production');
 
 	$configs->env->production->baseURI = '/';
@@ -48,6 +45,22 @@
 	));
 
 	$configs->env->production->auth->setURLs('/home/','/login/');
+
+
+	$configs->env->production->menu->setMenus(array(
+		'Home/dashboard' => '%baseURI%/home',
+		'Projetos/briefcase' => '%baseURI%/projetos',
+		'Editar perfil/cog' => '%baseURI%/perfil/editar',
+	), 'user');
+	$configs->env->production->menu->setMenus(array(
+		'Home/dashboard' => '%baseURI%/home'
+	));
+	$configs->env->production->menu->setConfigs(array(
+		'container' => 'nav',
+		'container_class' => 'navbar navbar-default',
+		'menu_class' => 'nav navbar-nav'
+	));
+
 
 
 	return $configs;

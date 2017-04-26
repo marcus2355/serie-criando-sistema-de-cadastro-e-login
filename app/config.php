@@ -20,7 +20,16 @@
 		'Home/dashboard' => '%baseURI%/home',
 		'Projetos/briefcase' => '%baseURI%/projetos',
 		'Editar perfil/cog' => '%baseURI%/perfil/editar',
+		'Sair/exit' => '%baseURI%/login/sair'
 	), 'user');
+
+	$configs->env->development->menu->setMenus(array(
+		'Home/dashboard' => '%baseURI%/home',
+		'Usuários/users' => '%baseURI%/usuarios',
+		'Editar perfil/cog' => '%baseURI%/perfil/editar',
+		'Sair/exit' => '%baseURI%/login/sair'
+	), 'administrator');
+
 	$configs->env->development->menu->setMenus(array(
 		'Home/dashboard' => '%baseURI%/home'
 	));
@@ -51,7 +60,16 @@
 		'Home/dashboard' => '%baseURI%/home',
 		'Projetos/briefcase' => '%baseURI%/projetos',
 		'Editar perfil/cog' => '%baseURI%/perfil/editar',
+		'Sair/exit' => '%baseURI%/login/sair'
 	), 'user');
+
+	$configs->env->production->menu->setMenus(array(
+		'Home/dashboard' => '%baseURI%/home',
+		'Usuários/users' => '%baseURI%/usuarios',
+		'Editar perfil/cog' => '%baseURI%/perfil/editar',
+		'Sair/exit' => '%baseURI%/login/sair'
+	), 'administrator');
+	
 	$configs->env->production->menu->setMenus(array(
 		'Home/dashboard' => '%baseURI%/home'
 	));

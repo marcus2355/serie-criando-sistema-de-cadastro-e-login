@@ -35,6 +35,8 @@ class PerfilController extends \HXPHP\System\Controller
 
 	public function atualizarAction()
 	{
+		$this->view->setFile('editar');
+
 		$user_id = $this->auth->getUserId();
 		
 
@@ -45,7 +47,7 @@ class PerfilController extends \HXPHP\System\Controller
 		$post = $this->request->post();
 
 		if (!empty($post)) {
-			$atualizarUsuario = User::atualizar($user_id,$post);
+			$atualizarUsuario = User::atualizar($user_id, $post);
 
 			if ($atualizarUsuario->status === false) {
 				$this->load('Helpers\Alert', array(
@@ -55,6 +57,7 @@ class PerfilController extends \HXPHP\System\Controller
 				));
 			}
 			else {
+				$this->view->setVar('user', $atualizarUsuario->user);
 				$this->load('Helpers\Alert', array(
 					'success',
 					'Uhuul! Perfil atualizado com sucesso.'
